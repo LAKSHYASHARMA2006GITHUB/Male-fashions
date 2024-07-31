@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>CRUD in JS</title>
+<style>
+body {
+  font-family: sans-serif;
+}
+
+.forms{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    border: 2px solid black;
+}
+
+.myform input{
+border: 2px solid black;
+border-radius: 5px;
+}
+table {
+  /* border-collapse: collapse; */
+  width: 100%;   
+}
+th, td {
+  text-align: left;
+  padding: 8px;
+  border: 1px solid #ddd;
+}
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+th {
+  background-color: #4CAF50;
+  color: white;
+}
+.button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+</style>
+</head>
+<body>
+  <div class="forms">
+<h1>CRUD in JS</h1>
+
+<form id="myForm">
+  <label for="name">Enter your name:</label><br>
+  <input type="text" id="name" name="name" placeholder="enter your name"><br><br>
+  <label for="age">Enter your age:</label><br>
+  <input type="number" id="age" name="age" placeholder="enter your age"><br><br>
+  <label for="phone">Enter your phone:</label><br>
+  <input type="text" id="phone" name="phone"><br><br>
+  <label for="email">Enter your email:</label><br>
+  <input type="email" id="email" name="email"><br><br>
+  <label for="gender">Gender:</label><br>
+  <input type="radio" id="male" name="gender" value="Male">
+  <label for="male">Male</label><br>
+  <input type="radio" id="female" name="gender" value="Female">
+  <label for="female">Female</label><br>
+  <input type="radio" id="other" name="gender" value="Other">
+  <label for="other">Other</label><br><br>
+  <label for="hometown">Select Hometown:</label><br>
+  <select id="hometown" name="hometown">
+    <option value="Ajmer">Ajmer</option>
+    <option value="Jaipur">Jaipur</option>
+    <option value="Mumbai">Mumbai</option>
+  </select><br><br>
+  <button type="submit" class="button">Submit</button>
+</form>
+</div>
+
+<br>
+
+<table>
+  <thead>
+    <tr>
+      <th>S.No</th>
+      <th>Name</th>
+      <th>Age</th>
+      <th>Phone</th>
+      <th>Email</th>
+      <th>Gender</th>
+      <th>Hometown</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody id="tableData">
+   
+  </tbody>
+</table>
+
+<script>
+    let form = document.getElementById("myForm");
+let tableData = document.getElementById("tableData");
+
+let data = [];
+
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
+  
+  let  name = document.getElementById("name").value;
+  let  age = document.getElementById("age").value;
+  let  phone = document.getElementById("phone").value;
+  let  email = document.getElementById("email").value;
+  let gender = document.querySelector('input[name="gender"]:checked').value;
+  let  hometown = document.getElementById("hometown").value;
+
+  let newData = {
+    name: name,
+    age: age,
+    phone: phone,
+    email: email,
+    gender: gender,  
+    hometown: hometown
+  };
+
+  data.push(newData);
+  renderData();
+  form.reset();
+});
+
+function renderData() {
+  tableData.innerHTML = "";
+  
+  for (let i = 0; i < data.length; i++) {
+    let row = tableData.insertRow();
+    let cell1 = row.insertCell();
+    let cell2 = row.insertCell();
+    let cell3 = row.insertCell();
+    let cell4 = row.insertCell();
+    let cell5 = row.insertCell();
+    let cell6 = row.insertCell();
+    let cell7 = row.insertCell();
+    let cell8 = row.insertCell();
+    cell1.textContent = i + 1;
+    cell2.textContent = data[i].name;
+    cell3.textContent = data[i].age;
+    cell4.textContent = data[i].phone;
+    cell5.textContent = data[i].email;
+    cell6.textContent = data[i].gender;
+    cell7.textContent = data[i].hometown;
+
+    // Actions button
+    let editButton = document.createElement("button");
+    editButton.textContent = "Edit";
+    editButton.addEventListener("click", () => {
+      // Edit functionality (not implemented)
+      console.log("Edit button clicked for row:", i);
+    });
+
+    let deleteButton = document.createElement("button");
+    deleteButton.textContent = "Delete";
+    deleteButton.addEventListener("click", () => {
+      data.splice(i, 1); 
+      renderData(); 
+    });
+    cell8.appendChild(editButton);
+    cell8.appendChild(deleteButton);
+  }
+}
+renderData();
+</script>
+</script>
+
+
+</body>
+</html>
